@@ -5,7 +5,8 @@
   "scripts": {
     "server": "cd server && nodemon index.js",
     "client": "cd frontend && npm run dev",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "db-init": "cd server && node setup-db.js"
   },
   "keywords": [],
   "author": "",

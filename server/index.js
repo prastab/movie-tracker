@@ -9,9 +9,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Database connection
-const connection = mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
-pool = mysql.createPool(process.env.MYSQL_PUBLIC_URL);
+// Database connection pool
+pool = mysql.createPool({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  port: process.env.MYSQL_PORT,
+  connectionLimit: 10,
+});
 
 // Test database connection
 pool.getConnection((err, connection) => {
@@ -31,7 +37,7 @@ app.use("/api/ratings", ratingsRoutes(pool));
 app.use("/api/auth", authRoutes(pool));
 app.use("/api/watchlist", watchlistRoutes(pool));
 
-// Example API endpoint
+// Get Watchlists API Endpoint
 app.get("/api/watchlists", (req, res) => {
   pool.query("SELECT * FROM watchlists", (error, results) => {
     if (error) {
