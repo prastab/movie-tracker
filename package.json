@@ -2,11 +2,17 @@
   "name": "movie-tracker",
   "version": "1.0.0",
   "description": "Movie Tracker directory with server and frontend",
+  "private": true,
+  "workspaces": [
+    "server",
+    "frontend"
+  ],
   "scripts": {
     "server": "cd server && nodemon index.js",
     "client": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "db-init": "cd server && node setup-db.js"
+    "db-init": "cd server && node setup-db.js",
+    "build": "cd frontend && npm run build && cp -R build ../server/public"
   },
   "keywords": [],
   "author": "",
