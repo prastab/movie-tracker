@@ -2,8 +2,10 @@
 import { ref, onMounted } from "vue";
 import { useAuthStore } from "../../stores/auth";
 import { getWatchlistMovies, getAllUserRatings } from "../../lib/api";
+import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();
+const router = useRouter();
 const isLoading = ref(false);
 const error = ref("");
 const success = ref("");
@@ -47,12 +49,23 @@ const fetchUserStats = async () => {
         isLoading.value = false;
     }
 };
+const handleLogout = () => {
+    authStore.logout();
+    router.push("/login"); // Redirect to login page after logout
+};
 
+onMounted(() => {
+    if (authStore.isAuthenticated) {
+        fetchUserStats();
+    } else {
+        router.push("/login");
+    }
+});
 onMounted(fetchUserStats);
 </script>
 
 <template>
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-4 pt-24">
         <div class="max-w-3xl mx-auto">
             <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">
                 Profile Settings
@@ -163,7 +176,7 @@ onMounted(fetchUserStats);
             <!-- Logout Button -->
             <div class="flex justify-end">
                 <button
-                    @click="authStore.logout"
+                    @click="handleLogout"
                     class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
                 >
                     Logout

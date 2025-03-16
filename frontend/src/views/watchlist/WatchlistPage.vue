@@ -2,9 +2,10 @@
 import { ref, onMounted } from "vue";
 import { getWatchlistMovies, removeFromWatchlist } from "../../lib/api";
 import { useRouter } from "vue-router";
+import type { WatchlistMovie } from "../../types/movie";
 
 const router = useRouter();
-const movies = ref([]);
+const movies = ref<WatchlistMovie[]>([]);
 const isLoading = ref(true);
 const error = ref("");
 
@@ -17,7 +18,7 @@ const fetchWatchlistMovies = async () => {
 
         // Fetch movie details from TMDB for each movie in watchlist
         const movieDetails = await Promise.all(
-            watchlistMovies.map(async (movie) => {
+            watchlistMovies.map(async (movie: WatchlistMovie) => {
                 const response = await fetch(
                     `https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}`,
                 );
@@ -28,7 +29,7 @@ const fetchWatchlistMovies = async () => {
                     poster_path: data.poster_path
                         ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
                         : null,
-                };
+                } as WatchlistMovie;
             }),
         );
 
@@ -122,7 +123,7 @@ onMounted(fetchWatchlistMovies);
                     @click="navigateToMovie(movie.id)"
                 >
                     <img
-                        :src="movie.poster_path"
+                        :src="movie.poster_path || undefined"
                         :alt="movie.title"
                         class="w-full h-full object-cover"
                     />

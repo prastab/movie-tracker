@@ -65,7 +65,7 @@ async function handleRegister() {
                             v-model="email"
                             type="email"
                             required
-                            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                            class="mt-1 block w-full rounded-md border border-gray-300 bg-gray-200 focus:bg-gray-50 px-3 py-2 text-gray-700 placeholder-gray-400 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm dark:bg-gray-700 dark:border-gray-900 dark:text-white dark:placeholder-gray-500"
                             placeholder="Enter your email"
                         />
                     </div>
@@ -82,7 +82,7 @@ async function handleRegister() {
                             v-model="password"
                             type="password"
                             required
-                            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                            class="mt-1 block w-full rounded-md border border-gray-300 bg-gray-200 focus:bg-gray-50 px-3 py-2 text-gray-700 placeholder-gray-400 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm dark:bg-gray-700 dark:border-gray-900 dark:text-white dark:placeholder-gray-500"
                             placeholder="Create a password"
                         />
                     </div>
@@ -99,7 +99,7 @@ async function handleRegister() {
                             v-model="confirmPassword"
                             type="password"
                             required
-                            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                            class="mt-1 block w-full rounded-md border border-gray-300 bg-gray-200 focus:bg-gray-50 px-3 py-2 text-gray-700 placeholder-gray-400 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm dark:bg-gray-700 dark:border-gray-900 dark:text-white dark:placeholder-gray-500"
                             placeholder="Confirm your password"
                         />
                     </div>
@@ -112,7 +112,7 @@ async function handleRegister() {
                 <button
                     type="submit"
                     :disabled="isLoading"
-                    class="group relative flex w-full justify-center rounded-md bg-primary py-2 px-4 text-sm font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="group relative flex w-full justify-center rounded-md bg-blue-600 hover:bg-blue-700 py-2 px-4 text-sm font-medium text-white dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <span v-if="isLoading">Creating account...</span>
                     <span v-else>Create account</span>

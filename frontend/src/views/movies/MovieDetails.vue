@@ -5,9 +5,11 @@ import {
     addToWatchlist,
     removeFromWatchlist,
     getWatchlistStatus,
+    getUserRating,
+    rateMovie,
+    deleteRating,
 } from "../../lib/api";
 import { useAuthStore } from "../../stores/auth";
-import { getUserRating, rateMovie, deleteRating } from "../../lib/api";
 import RatingStars from "../../components/RatingStars.vue";
 
 const route = useRoute();
@@ -106,8 +108,6 @@ const handleRating = async (newRating: number) => {
     } catch (e) {
         console.error("Rating error:", e);
         ratingError.value = "Failed to update rating";
-        // Revert to previous rating on error
-        userRating.value = props.modelValue;
     } finally {
         isUpdatingRating.value = false;
     }
@@ -191,7 +191,7 @@ watch(
         >
             <p class="text-lg">{{ error }}</p>
             <button
-                @click="fetchMovieDetails(route.params.id)"
+                @click="fetchMovieDetails(route.params.id as string)"
                 class="px-6 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
             >
                 Try Again

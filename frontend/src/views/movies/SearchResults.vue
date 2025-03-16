@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import type { Movie } from "@/types/movie";
 
 const route = useRoute();
 const router = useRouter();
-const searchResults = ref([]);
+const searchResults = ref<Movie[]>([]);
 const isLoading = ref(false);
 const error = ref("");
 
@@ -23,12 +24,17 @@ const searchMovies = async (query: string) => {
             )}`,
         );
         const data = await response.json();
-        searchResults.value = data.results.map((movie: any) => ({
-            ...movie,
-            poster_path: movie.poster_path
-                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                : null,
-        }));
+        searchResults.value = data.results.map(
+            (movie: any): Movie => ({
+                id: movie.id,
+                title: movie.title,
+                poster_path: movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                    : null,
+                release_date: movie.release_date,
+                vote_average: movie.vote_average,
+            }),
+        );
     } catch (e) {
         error.value = "Failed to search movies";
         console.error(e);

@@ -7,10 +7,20 @@ export const useAuthStore = defineStore("auth", () => {
   const token = ref<string | null>(localStorage.getItem("token"));
   const user = ref<any>(null);
 
+  function setToken(newToken: string | null) {
+    token.value = newToken;
+    if (newToken) {
+      localStorage.setItem("token", newToken);
+      user.value = jwtDecode(newToken);
+    } else {
+      localStorage.removeItem("token");
+      user.value = null;
+    }
+  }
   // Initialize user from token if it exists
   if (token.value) {
     try {
-      user.value = jwtDecode(token.value);
+      setToken(token.value);
     } catch (error) {
       console.error("Failed to decode token:", error);
       token.value = null;
@@ -20,12 +30,11 @@ export const useAuthStore = defineStore("auth", () => {
 
   const isAuthenticated = computed(() => !!token.value && !!user.value);
 
+  // Login user and set token
   async function login(email: string, password: string) {
     try {
       const response = await api.post("/auth/login", { email, password });
-      token.value = response.data.token;
-      localStorage.setItem("token", token.value);
-      user.value = jwtDecode(token.value);
+      setToken(response.data.token);
       return response.data;
     } catch (error: any) {
       console.error("Login error:", error.response?.data || error.message);
@@ -33,12 +42,12 @@ export const useAuthStore = defineStore("auth", () => {
     }
   }
 
+  // Register user and set token
   async function register(email: string, password: string) {
     try {
       const response = await api.post("/auth/register", { email, password });
       token.value = response.data.token;
-      localStorage.setItem("token", token.value);
-      user.value = jwtDecode(token.value);
+      setToken(response.data.token);
       return response.data;
     } catch (error: any) {
       console.error(

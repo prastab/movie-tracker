@@ -51,13 +51,15 @@ export const routes: RouteRecordRaw[] = [
 
 // Navigation guard
 export function setupRouteGuards(router: any) {
-  router.beforeEach((to: any, from: any, next: any) => {
+  router.beforeEach((to: any) => {
     const authStore = useAuthStore();
 
     if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-      next({ name: "login", query: { redirect: to.fullPath } });
-    } else {
-      next();
+      return {
+        name: "login",
+        query: { redirect: to.fullPath },
+      };
     }
+    return true;
   });
 }

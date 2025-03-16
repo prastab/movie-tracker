@@ -3,9 +3,10 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { getAllUserRatings, deleteRating } from "../../lib/api";
 import RatingStars from "../../components/RatingStars.vue";
+import type { RatedMovie } from "../../types/movie";
 
 const router = useRouter();
-const movies = ref([]);
+const movies = ref<RatedMovie[]>([]);
 const isLoading = ref(true);
 const error = ref("");
 
@@ -17,19 +18,19 @@ const fetchRatedMovies = async () => {
 
         // Fetch movie details from TMDB for each rated movie
         const movieDetails = await Promise.all(
-            ratings.map(async (rating) => {
+            ratings.map(async (rating: RatedMovie) => {
                 const response = await fetch(
                     `https://api.themoviedb.org/3/movie/${rating.movie_id}?api_key=${API_KEY}`,
                 );
                 const data = await response.json();
                 return {
                     ...data,
-                    userRating: rating.rating,
+                    rating: rating.rating,
                     ratedAt: rating.created_at,
                     poster_path: data.poster_path
                         ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
                         : null,
-                };
+                } as RatedMovie;
             }),
         );
 
@@ -123,7 +124,7 @@ onMounted(fetchRatedMovies);
                     @click="navigateToMovie(movie.id)"
                 >
                     <img
-                        :src="movie.poster_path"
+                        :src="movie.poster_path || undefined"
                         :alt="movie.title"
                         class="w-full h-full object-cover"
                     />
@@ -155,7 +156,7 @@ onMounted(fetchRatedMovies);
 
                     <div class="flex items-center justify-between mb-3">
                         <RatingStars
-                            v-model="movie.userRating"
+                            v-model="movie.rating"
                             size="sm"
                             disabled
                         />
@@ -170,7 +171,7 @@ onMounted(fetchRatedMovies);
                             @click="handleRemoveRating(movie.id)"
                             class="text-red-500 hover:text-red-600 transition-colors"
                         >
-                            Remove
+                            Unrate
                         </button>
                     </div>
                 </div>

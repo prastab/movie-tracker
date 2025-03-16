@@ -4,15 +4,19 @@ import { useAuthStore } from "../../stores/auth";
 import { useTheme } from "../../composables/useTheme";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
-import SearchDropdown from "../SearchDropDown.vue";
+import SearchDropdown from "../SearchDropdown.vue";
+
+interface SearchDropdownInstance {
+    showDropdown: boolean;
+}
 
 const { isDark, toggleTheme } = useTheme();
 
 const authStore = useAuthStore();
 const router = useRouter();
+const searchDropdownRef = ref<SearchDropdownInstance | null>(null);
+const searchRef = ref<HTMLElement | null>(null);
 const searchQuery = ref("");
-const searchRef = ref(null);
-const searchDropdownRef = ref(null);
 
 const handleSearch = (e?: Event) => {
     e?.preventDefault();
@@ -29,7 +33,10 @@ const handleSearch = (e?: Event) => {
 };
 
 const handleClickOutside = (event: MouseEvent) => {
-    if (searchRef.value && !searchRef.value.contains(event.target)) {
+    if (
+        searchRef.value &&
+        !searchRef.value.contains(event.target as HTMLElement)
+    ) {
         if (searchDropdownRef.value) {
             searchDropdownRef.value.showDropdown = false; // Remove .value here
         }
@@ -59,6 +66,7 @@ onUnmounted(() => {
     document.removeEventListener("click", handleClickOutside);
 });
 </script>
+
 <template>
     <header
         class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-600"

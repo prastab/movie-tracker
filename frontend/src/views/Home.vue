@@ -7,10 +7,11 @@ import {
     removeFromWatchlist,
     getWatchlistStatus,
 } from "../lib/api";
+import type { TMDBMovie } from "../types/movie";
 
 const router = useRouter();
 const authStore = useAuthStore();
-const trendingMovies = ref([]);
+const trendingMovies = ref<TMDBMovie[]>([]);
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 const watchlistStatuses = ref(new Map());
@@ -31,7 +32,7 @@ const fetchTrendingMovies = async () => {
 };
 const fetchWatchlistStatuses = async () => {
     try {
-        const statuses = await Promise.all(
+        const statuses: [number, boolean][] = await Promise.all(
             trendingMovies.value.map(async (movie) => {
                 const status = await getWatchlistStatus(movie.id);
                 return [movie.id, status];
