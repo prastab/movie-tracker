@@ -10,15 +10,11 @@ import Navbar from "./components/layout/Navbar.vue";
         </header>
         <main class="pt-16">
             <RouterView v-slot="{ Component }">
-                <transition
-                    enter-active-class="transition-opacity duration-300"
-                    leave-active-class="transition-opacity duration-300"
-                    enter-from-class="opacity-0"
-                    leave-to-class="opacity-0"
-                >
-                    <component :is="Component" />
-                </transition>
-            </RouterView>
+                <component
+                  :is="Component"
+                  v-if="Component"
+                  />
+              </RouterView>
         </main>
     </div>
 </template>

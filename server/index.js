@@ -11,8 +11,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public", "dist")));
-app.get("/", (req, res) => {
-  res.send("hello world!");
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'dist', 'index.html'));
 });
 // Database connection pool
 pool = mysql.createPool({

@@ -1,36 +1,21 @@
 # MovieTracker
 
-MovieTracker is a full-stack web application that lets you track movies, manage your watchlist, and rate movies. It’s built with an Express.js backend, a Vue 3 + TypeScript (Vite) frontend, and a MySQL database.
+MovieTracker is a web app that helps you track, rate, and manage your movie watchlist. Built with Express.js, Vue 3, and MySQL.
+The website is deployed [here.](https://movie-tracker-production-923f.up.railway.app/)
 
 ---
 
-## Project Features
+## Main Features
 
-- **User Management & Authentication**
-  - Register and log in securely.
-  - JWT-based authentication to protect API endpoints.
-  - Passwords are securely hashed before storage.
+**User Authentication:** Secure registration, login, and JWT authentication.
 
-- **Movie Management**
-    - Rate movies.
-    - View movie details.
-    - Update or delete your movie ratings.
-    - Add or remove movies from your watchlist.
+**Movie Tracking:** Rate movies, update/delete ratings, and manage your watchlist.
 
-- **Frontend User Interface**
-  - Modern, clean, and responsive UI using Vue.js and Tailwind CSS.
-  - Easy navigation between pages (Home, Movie Details, Profile, Auth, and Watchlist).
-  - Reusable and interactive components (RatingStars, Navbar, Search with autocomplete).
+**Modern UI:** Vue 3 + Tailwind CSS for a responsive, smooth experience.
 
-- **Backend & API**
-  - RESTful API built with Express.js.
-  - MySQL integration for storing users, ratings, and watchlist data.
-  - Database schema defined in `schema.sql`.
-  - Security middleware (JWT verification) protects sensitive routes.
+**Backend API:** Express.js RESTful API with secure MySQL database integration.
 
-- **Extra Features**
-  - Scripts that make it easier to run and build.
-  - Integration with the TMDB API for movie details.
+**Extras:** TMDB API integration and easy setup with database and build scripts.
 
 ---
 
@@ -55,12 +40,6 @@ movie-tracker/
        ├── stores/           // Pinia store
        ├── types/
        └── views/            // Vue view components (pages)
-           ├── Home.vue
-           ├── auth/
-           ├── movies/
-           ├── profile/
-           └── watchlist/
-
 ```
 ---
 
@@ -70,14 +49,13 @@ movie-tracker/
 
 - Node.js (v14 or above)
 - MySQL server
+- TMDB API key (get it from [TMDB website](https://www.themoviedb.org/documentation/api))
 
 ## Environment Variables Setup
 
 Before running the project, you need to create environment variable files for both your server and client.
 
-### Server (.env)
-
-Create a `.env` file inside the `server` folder containing the following variables:
+1. **Server Configuration** (create `.env` in `/server`):
 
 ```
 MYSQL_HOST=localhost
@@ -95,9 +73,7 @@ JWT_SECRET=your_generated_jwt_secret
 
 Make sure you generated the **JWT secret** using the provided command.
 
-### Frontend (.env)
-
-Create a `.env` file in the `frontend` folder with:
+2. **Frontend Configuration** (create `.env` in `/frontend`):
 
 ```
 VITE_TMDB_API_KEY=your_tmdb_api_key
@@ -117,25 +93,22 @@ npm install
 
 This installs all required dependencies for both server and frontend.
 
-> If you prefer to install dependencies separately, navigate to each folder and run:
-> • For the server: `cd server && npm install`
-> • For the frontend: `cd frontend && npm install`
+> If you prefer to install dependencies separately, run: `npm install` in each folder.
 
 ### 2. Database Setup
 
-• Ensure you have a MySQL server running and that you have created a database matching the name in your `.env` (MYSQL_DATABASE).
+• Make sure your MySQL server running and create database matching the name in your `.env` (MYSQL_DATABASE).
 • The file `schema.sql` (inside the `server` folder) contains the necessary SQL statements to create tables for users, sessions, watchlist, and ratings.
 • To initialize the database tables, run:
 
 ```bash
 npm run db-init
 ```
-
-This command switches to the `server` folder and executes `node setup-db.js` to create all database tables.
+> This command switches to the `server` folder and executes `node setup-db.js` to create all database tables.
 
 ### 3. Running the Server and Frontend Concurrently
 
-For convenience, you can start both the server and the frontend at the same time using the provided `dev` script:
+You can start both the server and the frontend at the same time using the provided `dev` script:
 
 ```bash
 npm run dev
