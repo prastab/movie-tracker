@@ -12,7 +12,7 @@
     "client": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "db-init": "cd server && node setup-db.js",
-    "build": "cd frontend && npm run build && cp -R build ../server/public"
+    "build": "cd frontend && npm run build && cp -R dist ../server/public"
   },
   "keywords": [],
   "author": "",

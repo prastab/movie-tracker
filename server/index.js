@@ -4,10 +4,13 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
+const path = require("path");
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, "public", "dist")));
 
 // Database connection pool
 pool = mysql.createPool({
