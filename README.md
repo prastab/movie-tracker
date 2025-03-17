@@ -1,7 +1,9 @@
-# MovieTracker
+<h1 align="center">Movie Tracker </h1>
 
-MovieTracker is a web app that helps you track, rate, and manage your movie watchlist. Built with Express.js, Vue 3, and MySQL.
-The website is deployed [here.](https://movie-tracker-production-923f.up.railway.app/)
+<p align="center">MovieTracker is a web app that helps you track, rate, and manage your movie watchlist. Built with Express.js, Vue 3, and MySQL.
+    The website is deployed <a href="https://movie-tracker-production-923f.up.railway.app/">here.</a></p>
+
+![screenshot](./public/screenshot.png)
 
 ---
 
