@@ -41,7 +41,7 @@ app.use("/api/watchlist", watchlistRoutes(pool));
 
 // Get Watchlists API Endpoint
 app.get("/api/watchlists", (req, res) => {
-  pool.query("SELECT * FROM watchlists", (error, results) => {
+  pool.query("SELECT * FROM user_watchlist", (error, results) => {
     if (error) {
       return res.status(500).json({ error: error.message });
     }
