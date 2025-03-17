@@ -4,14 +4,14 @@ const fs = require("fs");
 const path = require("path");
 
 // Read the schema file
-const schema = fs.readFileSync(path.join(__dirname, "schema.sql"), "utf8");
+let schema = fs.readFileSync(path.join(__dirname, "schema.sql"), "utf8");
+schema = schema.replace(/\${DATABASE_NAME}/g, process.env.MYSQL_DATABASE);
 
 // Create connection
 pool = mysql.createPool({
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
   port: process.env.MYSQL_PORT,
   connectionLimit: 10,
 });

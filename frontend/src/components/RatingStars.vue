@@ -2,12 +2,17 @@
 import { ref } from "vue";
 import { useAuthStore } from "../stores/auth";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     modelValue: number;
     size?: "sm" | "md" | "lg";
     disabled?: boolean;
-    showRemoveButton?: boolean; // New prop
-}>();
+    showRemoveButton?: boolean;
+}>(), {
+    modelValue: 0,
+    size: 'md',
+    disabled: false,
+    showRemoveButton: false
+});
 
 const emit = defineEmits<{
     (e: "update:modelValue", value: number): void;

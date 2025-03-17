@@ -35,6 +35,7 @@ const fetchWatchlistMovies = async () => {
 
         movies.value = movieDetails;
     } catch (e) {
+      console.log(e);
         error.value = "Failed to load watchlist";
     } finally {
         isLoading.value = false;

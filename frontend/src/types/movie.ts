@@ -15,6 +15,9 @@ export interface RatedMovie extends Movie {
 
 export interface WatchlistMovie extends Movie {
   addedAt: string;
+  movie_id: number;
+  created_at: string;
+
 }
 
 export interface TMDBMovie {

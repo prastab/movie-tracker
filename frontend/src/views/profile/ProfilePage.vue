@@ -25,30 +25,31 @@ const fetchUserStats = async () => {
             getWatchlistMovies(),
             getAllUserRatings(),
         ]);
-
+        const watchlistArray = Array.isArray(watchlistMovies) ? watchlistMovies : [];
+        const ratingsArray = Array.isArray(userRatings) ? userRatings : [];
         // Calculate stats
         stats.value = {
-            totalMoviesRated: userRatings.length,
-            watchlistCount: watchlistMovies.length,
-            averageRating:
-                userRatings.length > 0
-                    ? Number(
-                          (
-                              userRatings.reduce(
-                                  (acc: number, curr: any) => acc + curr.rating,
-                                  0,
-                              ) / userRatings.length
-                          ).toFixed(1),
-                      )
-                    : 0,
+                    totalMoviesRated: ratingsArray.length,
+                    watchlistCount: watchlistArray.length,
+                    averageRating:
+                        ratingsArray.length > 0
+                            ? Number(
+                                  (
+                                      ratingsArray.reduce(
+                                          (acc, curr) => acc + (curr.rating || 0),
+                                          0,
+                                      ) / ratingsArray.length
+                                  ).toFixed(1),
+                              )
+                            : 0,
+                };
+            } catch (e) {
+                console.error("Error fetching user stats:", e);
+                error.value = "Failed to load user statistics";
+            } finally {
+                isLoading.value = false;
+            }
         };
-    } catch (e) {
-        console.error("Error fetching user stats:", e);
-        error.value = "Failed to load user statistics";
-    } finally {
-        isLoading.value = false;
-    }
-};
 const handleLogout = () => {
     authStore.logout();
     router.push("/login"); // Redirect to login page after logout

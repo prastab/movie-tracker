@@ -10,10 +10,7 @@ const path = require("path");
 app.use(cors());
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "public", "dist")));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'dist', 'index.html'));
-});
+
 // Database connection pool
 pool = mysql.createPool({
   host: process.env.MYSQL_HOST,
@@ -50,6 +47,11 @@ app.get("/api/watchlists", (req, res) => {
     }
     res.json(results);
   });
+});
+
+app.use(express.static(path.join(__dirname, "public", "dist")));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'dist', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
